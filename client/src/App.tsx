@@ -1,42 +1,42 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import DashboardLayout from "@/components/DashboardLayout";
+import Compliance from "@/pages/Compliance";
+import ControlCoverage from "@/pages/ControlCoverage";
+import ExecutiveSummary from "@/pages/ExecutiveSummary";
+import Findings from "@/pages/Findings";
 import NotFound from "@/pages/NotFound";
+import Overview from "@/pages/Overview";
+import RiskTrends from "@/pages/RiskTrends";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
 
-function Router() {
-  // make sure to consider if you need authentication for certain routes
+function WorkspaceRouter() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <DashboardLayout>
+      <Switch>
+        <Route path="/" component={Overview} />
+        <Route path="/risk-trends" component={RiskTrends} />
+        <Route path="/control-coverage" component={ControlCoverage} />
+        <Route path="/compliance" component={Compliance} />
+        <Route path="/findings" component={Findings} />
+        <Route path="/executive-summary" component={ExecutiveSummary} />
+        <Route component={NotFound} />
+      </Switch>
+    </DashboardLayout>
   );
 }
-
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <Toaster />
-          <Router />
+          <Toaster theme="dark" />
+          <WorkspaceRouter />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
 }
-
 export default App;

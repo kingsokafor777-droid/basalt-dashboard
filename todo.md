@@ -1,0 +1,22 @@
+# Project TODO
+
+- [x] Define four-table Basalt warehouse schema for scan runs, finding observations, controls, and drift events.
+- [x] Generate deterministic, realistic multi-scanner seed data spanning AWS, Azure, Kubernetes, and IaC findings.
+- [x] Apply schema migration and load seed data without embedding mock values in frontend components.
+- [x] Implement typed tRPC procedures for dashboard KPIs, risk trends, coverage, compliance, filtered findings, and executive summary.
+- [x] Create server-side tests for data aggregates, filters, pagination, and executive rollup contracts.
+- [x] Use the supplied DashboardLayout as the application shell and implement six navigable views.
+- [x] Apply the dark navy Basalt design system, Inter typography, accessible focus states, and strict severity color mapping.
+- [x] Build the Overview view with warehouse-driven KPIs, severity distribution, open-versus-resolved ratio, and scan health.
+- [x] Build the Risk Trends view with animated Recharts thirty-day new, resolved, and regressed finding series.
+- [x] Build the Control Coverage view with Recharts framework visualization and sortable coverage table.
+- [x] Build the Compliance view with framework score gauges, control-status heatmap, and scanner/provider filtering.
+- [x] Add and validate a scanner-aware Compliance filter that works alongside the provider filter against persisted warehouse data.
+- [x] Build the Findings view with typed pagination, sorting, filters, and a slide-out finding-detail drawer.
+- [x] Build the Executive Summary with printable layout, browser print support, exportable report artifact, trend sparkline, critical-finding rollup, compliance scores, and risk narrative.
+- [x] Verify responsive desktop and mobile visual rendering with screenshots.
+- [x] Revalidate all six mobile routes after the navigation-shell correction and confirm the drawer trigger does not obscure page content.
+- [x] Exercise the compact Basalt drawer trigger and switch routes through the drawer before the final release validation.
+- [x] Run database validation, Vitest tests, TypeScript checking, formatting, and production build validation.
+- [x] Document data architecture, local development, seeded dataset behavior, and warehouse integration boundaries.
+- [ ] Create a clean project checkpoint, commit the repository, and push basalt-dashboard to GitHub.
