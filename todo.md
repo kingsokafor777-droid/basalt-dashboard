@@ -19,4 +19,4 @@
 - [x] Exercise the compact Basalt drawer trigger and switch routes through the drawer before the final release validation.
 - [x] Run database validation, Vitest tests, TypeScript checking, formatting, and production build validation.
 - [x] Document data architecture, local development, seeded dataset behavior, and warehouse integration boundaries.
-- [ ] Create a clean project checkpoint, commit the repository, and push basalt-dashboard to GitHub.
+- [x] Create a clean project checkpoint, commit the repository, and push basalt-dashboard to GitHub.
