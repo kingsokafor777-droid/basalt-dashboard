@@ -9,7 +9,8 @@ COPY patches ./patches
 RUN npm install --global corepack@latest \
     && corepack pnpm install --frozen-lockfile
 COPY . .
-RUN corepack pnpm build
+RUN corepack pnpm build \
+    && corepack pnpm prune --prod
 
 FROM gcr.io/distroless/nodejs22-debian12@sha256:13593b7570658e8477de39e2f4a1dd25db2f836d68a0ba771251572d23bb4f8e
 WORKDIR /app
