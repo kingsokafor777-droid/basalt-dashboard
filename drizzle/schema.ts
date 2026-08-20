@@ -34,6 +34,43 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+/** The single authorized Basalt tenant for this deployment, extensible without changing analytics contracts. */
+export const organizations = mysqlTable(
+  "organizations",
+  {
+    id: varchar("id", { length: 64 }).primaryKey(),
+    slug: varchar("slug", { length: 96 }).notNull(),
+    name: varchar("name", { length: 255 }).notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  table => [uniqueIndex("organizations_slug_unique").on(table.slug)]
+);
+
+/** Explicit user-to-organization grants. Dashboard analytics are inaccessible without a grant. */
+export const organizationMembers = mysqlTable(
+  "organization_members",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    organizationId: varchar("organizationId", { length: 64 })
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    userId: int("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    role: mysqlEnum("role", ["owner", "analyst", "viewer"])
+      .default("viewer")
+      .notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  table => [
+    uniqueIndex("organization_members_user_org_unique").on(
+      table.userId,
+      table.organizationId
+    ),
+    index("organization_members_org_idx").on(table.organizationId),
+  ]
+);
+
 /** Completed scanner executions ingested from the Basalt warehouse contract. */
 export const scanRuns = mysqlTable(
   "scan_runs",
@@ -171,3 +208,5 @@ export type ScanRun = typeof scanRuns.$inferSelect;
 export type Control = typeof controls.$inferSelect;
 export type FindingObservation = typeof findingObservations.$inferSelect;
 export type DriftEvent = typeof driftEvents.$inferSelect;
+export type Organization = typeof organizations.$inferSelect;
+export type OrganizationMember = typeof organizationMembers.$inferSelect;

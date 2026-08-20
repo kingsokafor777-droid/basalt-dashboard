@@ -20,3 +20,11 @@
 - [x] Run database validation, Vitest tests, TypeScript checking, formatting, and production build validation.
 - [x] Document data architecture, local development, seeded dataset behavior, and warehouse integration boundaries.
 - [x] Create a clean project checkpoint, commit the repository, and push basalt-dashboard to GitHub.
+- [x] Restrict every security analytics procedure to authenticated users with an explicit Basalt organization boundary.
+- [x] Replace dashboard-only seeded analytics reads with a production Warehouse read adapter and an explicit local-development fallback.
+- [x] Add immutable-pinned dashboard CI for type-checking, Vitest, production build, and dependency auditing.
+- [x] Remediate production dependency advisories and remove pnpm configuration deprecation warnings.
+- [x] Add security-boundary and warehouse-adapter Vitest coverage, then validate the hardened dashboard end to end.
+- [x] Add tenant-membership tests for allow, deny, and owner-bootstrap authorization paths.
+- [x] Add remote Warehouse adapter tests for authenticated fetches, failures, contract validation, and production fail-closed behavior.
+- [x] Run a documented authenticated analytics integration check through the tenant-scoped router and Warehouse adapter.

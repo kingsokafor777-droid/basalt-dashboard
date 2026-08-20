@@ -11,6 +11,7 @@ import {
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { tenantProcedure } from "./tenant";
 import { loadWarehouseSnapshot } from "./warehouse";
 
 const findingsInput = z.object({
@@ -46,36 +47,39 @@ export const appRouter = router({
     }),
   }),
   dashboard: router({
-    overview: publicProcedure.query(async () =>
-      dashboardStats(await loadWarehouseSnapshot())
+    overview: tenantProcedure.query(async ({ ctx }) =>
+      dashboardStats(await loadWarehouseSnapshot(ctx.tenant.organizationId))
     ),
-    riskTrend: publicProcedure.query(async () =>
-      riskTrendSeries(await loadWarehouseSnapshot())
+    riskTrend: tenantProcedure.query(async ({ ctx }) =>
+      riskTrendSeries(await loadWarehouseSnapshot(ctx.tenant.organizationId))
     ),
-    controlCoverage: publicProcedure.query(async () =>
-      controlCoverage(await loadWarehouseSnapshot())
+    controlCoverage: tenantProcedure.query(async ({ ctx }) =>
+      controlCoverage(await loadWarehouseSnapshot(ctx.tenant.organizationId))
     ),
-    compliance: publicProcedure
+    compliance: tenantProcedure
       .input(
         z.object({
           provider: z.string().default("all"),
           scanner: z.string().default("all"),
         })
       )
-      .query(async ({ input }) =>
+      .query(async ({ ctx, input }) =>
         complianceSnapshot(
-          await loadWarehouseSnapshot(),
+          await loadWarehouseSnapshot(ctx.tenant.organizationId),
           input.provider,
           input.scanner
         )
       ),
-    findings: publicProcedure
+    findings: tenantProcedure
       .input(findingsInput)
-      .query(async ({ input }) =>
-        findingPage(await loadWarehouseSnapshot(), input)
+      .query(async ({ ctx, input }) =>
+        findingPage(
+          await loadWarehouseSnapshot(ctx.tenant.organizationId),
+          input
+        )
       ),
-    executiveSummary: publicProcedure.query(async () =>
-      executiveSummary(await loadWarehouseSnapshot())
+    executiveSummary: tenantProcedure.query(async ({ ctx }) =>
+      executiveSummary(await loadWarehouseSnapshot(ctx.tenant.organizationId))
     ),
   }),
 });

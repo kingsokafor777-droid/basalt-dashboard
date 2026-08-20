@@ -7,4 +7,7 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  basaltOrganizationId: process.env.BASALT_ORGANIZATION_ID ?? "basalt",
+  warehouseReadUrl: process.env.BASALT_WAREHOUSE_READ_URL ?? "",
+  warehouseReadToken: process.env.BASALT_WAREHOUSE_READ_TOKEN ?? "",
 };
