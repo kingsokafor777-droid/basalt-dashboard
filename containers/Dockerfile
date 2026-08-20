@@ -1,6 +1,9 @@
 FROM node:22-slim@sha256:a17d50af28002a160548bd4225b3cfcb12c5efcb171f79e68758f2885fb1b066
 
 WORKDIR /app
+RUN apt-get update \
+    && apt-get upgrade --no-install-recommends --yes \
+    && rm -rf /var/lib/apt/lists/*
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY patches ./patches
 RUN npm install --global corepack@latest \
